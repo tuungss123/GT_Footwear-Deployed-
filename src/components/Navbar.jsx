@@ -23,7 +23,7 @@ const Navbar = () => {
       </div>
       <div className="container mx-auto">
         <nav className="flex flex-col md:flex-row justify-between items-center px-4 py-2">
-          <div className="flex items-center space-x-4 mb-2 md:mb-0">
+          <div className="md:flex xs:hidden items-center space-x-4 mb-2 md:mb-0">
             {leftmenu.map((item, index) => (
               <a href={item.href} key={index} className="text-gray-800 hover:text-blue-500 px-3 py-2 text-lg">
                 {item.label}
@@ -33,7 +33,7 @@ const Navbar = () => {
           <div className="flex justify-center items-center w-full md:w-auto mb-2 md:mb-0">
             <img src="/src/images/gtlogo.png" alt="Logo" className="h-auto w-24 md:w-auto" />
           </div>
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-4 md:flex xs:hidden">
             {rightmenu.map((item, index) => (
               <a href={item.href} key={index} className="text-gray-800 hover:text-blue-500 px-3 py-2 text-lg">
                 {item.label}
