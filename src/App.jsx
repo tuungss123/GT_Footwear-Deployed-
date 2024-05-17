@@ -1,13 +1,13 @@
 // eslint-disable-next-line no-unused-vars
 import React from 'react'
-import Navbar from './components/Navbar'
-import Body from './components/Body'
+import Navbar from './pages/nav'
+import HomePage from './pages/homepage'
 
 const App = () => {
   return (
     <div>
       <Navbar/>
-      <Body/>
+      <HomePage/>
     
     </div>
   )
