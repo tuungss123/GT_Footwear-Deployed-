@@ -17,6 +17,7 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     brand = models.ForeignKey(Brand, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    gender = models.CharField(default="Unisex",max_length=10)
     picture_url = models.URLField(default='https://example.com/default-image.jpg')
 
     def __str__(self):

@@ -3,6 +3,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './pages/nav';
 import HomePage from './pages/homepage';
+import Footer from './pages/footer';
 
 
 const App = () => {
@@ -18,6 +19,7 @@ const App = () => {
         <Route path="/contact-us" element={<ContactUs />} />
         <Route path="/basket" element={<Basket />} /> */}
       </Routes>
+      <Footer/>
     </Router>
   );
 };
