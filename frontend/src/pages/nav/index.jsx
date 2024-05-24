@@ -6,7 +6,7 @@ import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 
 const Navbar = () => {
   return (
-    <div className="bg-gray-200 text-center">
+    <div className="bg-gray-100 text-center">
       <div className="bg-black px-4 py-2 text-center text-white">
         Welcome to our store
       </div>
