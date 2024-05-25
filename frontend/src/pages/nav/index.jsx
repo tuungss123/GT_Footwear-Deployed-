@@ -38,7 +38,7 @@ const Navbar = () => {
             <Link to="/contact-us" className="text-gray-800 hover:text-blue-500 px-3 py-2 text-lg">
               Contact Us
             </Link>
-            <Link to="/basket" className="text-gray-800 hover:text-blue-500">
+            <Link to="/cart" className="text-gray-800 hover:text-blue-500">
               <FontAwesomeIcon icon={faShoppingCart} style={{ fontSize: '28px' }} />
             </Link>
           </div>
