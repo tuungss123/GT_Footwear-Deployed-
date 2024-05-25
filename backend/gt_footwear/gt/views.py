@@ -7,6 +7,7 @@ from django.db.models import Sum, F, DecimalField
 from django.shortcuts import get_object_or_404
 
 
+
 @api_view(['GET'])
 def product_list(request):
     # Retrieve all products
@@ -40,16 +41,6 @@ def create_order(request):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(['POST'])
-def add_to_cart(request):
-    serializer = CartSerializer(data=request.data)
-    if serializer.is_valid():
-        # Set the session key in the serializer before saving
-        serializer.validated_data['session_key'] = request.session.session_key
-        serializer.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 @api_view(['PUT'])
 def update_cart_item(request, pk):
     cart_item = get_object_or_404(Cart, pk=pk, session_key=request.session.session_key)
@@ -75,8 +66,39 @@ def get_cart_total(request):
     total = Cart.objects.filter(session_key=request.session.session_key).aggregate(total_price=Sum(F('product__price') * F('quantity'), output_field=DecimalField()))
     return Response({'total': total['total_price']})
 
+
+
+
+@api_view(['POST'])
+def add_to_cart(request):
+    try:
+        if not request.session.session_key:
+            request.session.save()
+            
+        session_key = request.session.session_key
+
+
+        product_id = request.data.get('product')
+        quantity = request.data.get('quantity')
+        size_id = request.data.get('size')
+
+        cart_item = Cart.objects.create(
+            product_id=product_id,
+            quantity=quantity,
+            size_id=size_id,
+            session_key=session_key
+        )
+
+        serializer = CartSerializer(cart_item)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    except Exception as e:
+        return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    
 @api_view(['GET'])
 def get_cart_items(request):
-    cart_items = Cart.objects.filter(session_key=request.session.session_key)
+    session_key = request.session.session_key
+    
+    cart_items = Cart.objects.filter(session_key=session_key)
     serializer = CartSerializer(cart_items, many=True)
     return Response(serializer.data)

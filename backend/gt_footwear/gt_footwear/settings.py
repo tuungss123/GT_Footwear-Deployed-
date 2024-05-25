@@ -28,7 +28,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 CORS_ALLOW_ALL_ORIGINS = True
-# Application definition
+CORS_ALLOW_CREDENTIALS = True
 
 INSTALLED_APPS = [
     'gt',
@@ -45,17 +45,22 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.security.SecurityMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
 ]
 
-
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+        # Other authentication classes...
+    ),
+}
 
 ROOT_URLCONF = 'gt_footwear.urls'
 
@@ -137,14 +142,20 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # settings.py
 
 # Session settings
-SESSION_ENGINE = 'django.contrib.sessions.backends.db'  # Use database-backed sessions
-SESSION_COOKIE_AGE = 60 * 60 * 24 * 14  # Session cookie age: 2 weeks (in seconds)
-
-# CSRF settings
-CSRF_COOKIE_SECURE = True  # Only send CSRF cookies over HTTPS
-CSRF_COOKIE_HTTPONLY = True  # Mark CSRF cookies as HTTP-only
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+SESSION_CACHE_ALIAS = 'default'
 
 
-# Secure session cookie settings
-SESSION_COOKIE_SECURE = True  # Only send session cookies over HTTPS
-SESSION_COOKIE_HTTPONLY = True  # Mark session cookies as HTTP-only
+SESSION_COOKIE_AGE = 1209600  
+SESSION_SAVE_EVERY_REQUEST = True 
+
+SESSION_COOKIE_SAMESITE = 'None'  # For allowing cross-origin cookies
+SESSION_COOKIE_SECURE = True  # Set to True in production
+SESSION_COOKIE_HTTPONLY = True
+
+# CSRF_COOKIE_NAME = "csrftoken"
+# CSRF_COOKIE_HTTPONLY = True
+# CSRF_COOKIE_SECURE = True
+# CSRF_COOKIE_SAMESITE = 'Lax'
+
+# CSRF_TRUSTED_ORIGINS = ['http://localhost:5173', 'http://127.0.0.1:8000']
