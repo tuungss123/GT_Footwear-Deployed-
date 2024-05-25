@@ -21,6 +21,8 @@ const Cart = () => {
                     <p>Name: {item.product.name}</p>
                     <p>Size: {item.size.size}</p>
                     <p>Quantity: {item.quantity}</p>
+                    <p>Price: {item.product.price}</p>
+                    <img className="w-20" src={item.product.picture_url}/>
                 </div>
             ))}
         </div>
