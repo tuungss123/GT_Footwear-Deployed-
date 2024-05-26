@@ -33,7 +33,7 @@ const MensPage = () => {
     };
 
     return (
-        <div className="min-h-screen h-auto flex justify-center flex-wrap m-10">
+        <div className="h-auto flex justify-center flex-wrap m-10">
             {products.map(product => {
                 if (product.gender === "Mens") {
                     return (

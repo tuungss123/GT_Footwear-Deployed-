@@ -1,7 +1,8 @@
+
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-const Cart = () => {
+const CartModal = () => {
     const [cart, setCart] = useState([]);
 
     useEffect(() => {
@@ -15,18 +16,19 @@ const Cart = () => {
     }, []);
 
     return (
-        <div className="flex flex-row">
+        <div className="overflow-auto h-[500px]">
             {cart.map(item => (
-                <div key={item.id}>
+                <div key={item.id} className="flex flex-col items-center">
+                    <img className="w-20" src={item.product.picture_url}/>
                     <p>Name: {item.product.name}</p>
                     <p>Size: {item.size.size}</p>
                     <p>Quantity: {item.quantity}</p>
                     <p>Price: {item.product.price}</p>
-                    <img className="w-20" src={item.product.picture_url}/>
+                    
                 </div>
             ))}
         </div>
     );
 }
 
-export default Cart;
+export default CartModal;
