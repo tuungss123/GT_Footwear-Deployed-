@@ -15,7 +15,7 @@ const NewArrivals = () => {
     }, []);
 
     return (
-        <div className="min-h-screen h-auto flex flex-wrap m-10">
+        <div className="h-auto flex flex-wrap m-10">
             {products.slice(-5).map(product => (
                 <div key={product.id} className="w-[200px] h-[320px] rounded overflow-hidden shadow-lg m-4">
                     <img className="w-[200px]" src={product.picture_url} alt={product.name} />
