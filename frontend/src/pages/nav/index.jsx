@@ -1,11 +1,14 @@
 import { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import { faShoppingCart, faBars } from '@fortawesome/free-solid-svg-icons';
 import CartModal from './cart-modal';
+import BurgerMenu from './burger-menu';
+
 
 const Navbar = () => {
   const [showCart, setShowCart] = useState(false);
+  const [showBurger, setShowBurger] = useState(false);
   const timeoutRef = useRef(null);
   const handleMouseEnter = () => {
     if (timeoutRef.current) {
@@ -18,10 +21,15 @@ const Navbar = () => {
   const handleMouseLeave = () => {
     timeoutRef.current = setTimeout(() => {
       setShowCart(false);
-    }, 200);  // Adjust the delay as needed
+    }, 200); 
   };
 
+  const handleBurgerMenu = () =>{
+    setShowBurger(toggleState => !toggleState)
+  }
+
   return (
+    <div>
     <div className="bg-gray-100 text-center">
       <div className="bg-black px-4 py-2 text-center text-white">
         Welcome to our store
@@ -62,19 +70,27 @@ const Navbar = () => {
               <Link to="/cart" className="text-gray-800 hover:text-blue-500">
                 <FontAwesomeIcon icon={faShoppingCart} style={{ fontSize: '28px', color: 'gray' }} />
               </Link>
-              {showCart && (
-                <div
-                onMouseEnter={handleMouseEnter}
-                onMouseLeave={handleMouseLeave}
-                className="absolute right-0 mt-2 w-64 p-4 bg-white border border-gray-300 shadow-lg z-10">
-                  <CartModal />
-                </div>
-              )}
             </div>
+          </div>
+          <div className="absolute right-0 mr-8 md:hidden" onClick={handleBurgerMenu}>
+                <FontAwesomeIcon className='text-[28px] text-black' icon={faBars}/>
+                {showBurger && (
+                  <BurgerMenu/>
+                )}
           </div>
         </nav>
       </div>
     </div>
+    {showCart && (
+                <div
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+                className="xs:hidden xl:block absolute right-0 mt-2 w-64 p-4 bg-white border border-gray-300 shadow-lg z-10 ">
+                  <CartModal />
+                </div>
+              )}
+    </div>
+
   );
 };
 

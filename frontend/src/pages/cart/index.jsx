@@ -15,7 +15,7 @@ const Cart = () => {
     }, []);
 
     return (
-        <div className="flex flex-row">
+        <div className="flex flex-col">
             {cart.map(item => (
                 <div key={item.id}>
                     <p>Name: {item.product.name}</p>
