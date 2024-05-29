@@ -1,32 +1,31 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Product, Cart, OrderItem
-from .serializers import ProductSerializer, OrderSerializer, CartSerializer, OrderItemSerializer
-from django.db.models import Sum, F, DecimalField
+from .models import Product, Cart, OrderItem, Size
+from .serializers import ProductSerializer, OrderSerializer, CartSerializer, OrderItemSerializer, SizeSerializer
 from django.shortcuts import get_object_or_404
 
 
 
 @api_view(['GET'])
 def product_list(request):
-    # Retrieve all products
     products = Product.objects.all()
     serializer = ProductSerializer(products, many=True)
     return Response(serializer.data)
 
+@api_view(['GET'])
+def get_sizes_by_product(request, product_id):
+    size = Size.objects.filter(product_id=product_id)
+    serializer = SizeSerializer(size, many=True)
+    return Response(serializer.data)
+
 @api_view(['POST'])
 def create_order(request):
-    # Create a new order
     serializer = OrderSerializer(data=request.data)
     if serializer.is_valid():
-        # Save the order
         order = serializer.save()
-
-        # Retrieve cart items associated with the current session
         cart_items = Cart.objects.filter(session_key=request.session.session_key)
 
-        # Loop through cart items and create order items for each
         for cart_item in cart_items:
             OrderItem.objects.create(
                 order=order,
@@ -35,7 +34,6 @@ def create_order(request):
                 quantity=cart_item.quantity
             )
 
-        # Clear the cart after creating the order
         Cart.objects.filter(session_key=request.session.session_key).delete()
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -60,14 +58,6 @@ def remove_cart_item(request, pk):
 def clear_cart(request):
     Cart.objects.filter(session_key=request.session.session_key).delete()
     return Response(status=status.HTTP_204_NO_CONTENT)
-
-@api_view(['GET'])
-def get_cart_total(request):
-    total = Cart.objects.filter(session_key=request.session.session_key).aggregate(total_price=Sum(F('product__price') * F('quantity'), output_field=DecimalField()))
-    return Response({'total': total['total_price']})
-
-
-
 
 @api_view(['POST'])
 def add_to_cart(request):

@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import React from 'react';
-
+import { Link } from 'react-router-dom';
 const Featured = () => {
   return (
     <div className="p-4">
@@ -12,7 +12,7 @@ const Featured = () => {
             alt="New Releases"
             className="w-full h-auto rounded-lg shadow-lg object-cover"
           />
-          <a href="#new-releases" className="mt-4 text-xl font-bold">New Releases →</a>
+          <Link to="/new-arrivals" className="mt-4 text-xl font-bold">New Arrivals →</Link>
         </div>
         
         {/* Sneakers and Streetwear Sections */}
@@ -24,7 +24,7 @@ const Featured = () => {
               alt="Sneakers"
               className="w-full h-auto rounded-lg shadow-lg object-cover"
             />
-            <a href="#sneakers" className="mt-4 text-xl font-bold">Sneakers →</a>
+            <Link to="/mens" className="mt-4 text-xl font-bold">Sneakers →</Link>
           </div>
           
           {/* Streetwear Section */}
@@ -34,7 +34,7 @@ const Featured = () => {
               alt="Streetwear"
               className="w-full h-auto rounded-lg shadow-lg object-cover"
             />
-            <a href="#streetwear" className="mt-4 text-xl font-bold">Streetwear →</a>
+            <Link to="/streetwear" className="mt-4 text-xl font-bold">Streetwear →</Link>
           </div>
         </div>
       </div>

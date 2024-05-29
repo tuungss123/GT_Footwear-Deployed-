@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart} from '@fortawesome/free-solid-svg-icons';
 const BurgerMenu = () => {
     return(
-    <div className="fixed right-0 top-[120px] z-10 w-[60%] h-[35%] bg-gray-50 white rounded-xl">
+    <div className="fixed right-0 top-[120px] z-10 w-[60%] h-[320px] bg-gray-50 white rounded-xl">
         <div className="flex flex-col justify-center">
             <Link to="/" className="text-gray-800 hover:text-blue-500 px-3 py-2 text-lg">
               Home

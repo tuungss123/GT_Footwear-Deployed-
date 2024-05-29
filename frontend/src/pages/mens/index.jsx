@@ -84,11 +84,33 @@ const MensPage = () => {
     );
 };
 
-{/*Add to Cart Modal*/}
+
 const Modal = ({ product, isOpen, onClose, onAddToCart }) => {
-    
     const [quantity, setQuantity] = useState(1);
-    const [size, setSize] = useState(1);
+    const [size, setSize] = useState('');
+    const [availableSizes, setAvailableSizes] = useState([])
+    const [isButtonDisabled, setIsButtonDisabled] = useState(true)
+
+    useEffect(() => {
+        if (product && isOpen) {
+            axios.get(`http://127.0.0.1:8000/gt/sizes/${product.id}/`)
+                .then(response => {
+                    setAvailableSizes(response.data);
+                })
+                .catch(error => {
+                    console.error('Error fetching sizes:', error);
+                });
+        }
+        
+    }, [product, isOpen]);
+
+    useEffect(() => {
+        if (size) {
+            setIsButtonDisabled(false);
+        } else {
+            setIsButtonDisabled(true);
+        }
+    }, [size]);
 
     if (!isOpen) return null;
 
@@ -103,11 +125,12 @@ const Modal = ({ product, isOpen, onClose, onAddToCart }) => {
                 <img className="w-[200px]" src={product.picture_url} alt={product.name} />
                 <h2 className="text-xl mb-4">{product.name}</h2>
                 <div className="mb-4">
-                    <label className="block mb-2">Size</label>
+                    <label className="block mb-2">Available Sizes</label>
                     <select value={size} onChange={(e) => setSize(e.target.value)} className="w-full p-2 border rounded">
-                        <option value={1}>8</option>
-                        <option value={2}>9</option>
-                        <option value={3}>10</option>
+                        <option value="" disabled>Select a size</option>
+                        {availableSizes.map(size => (
+                            <option key={size} value={size.id}>{size.size}</option>
+                        ))}
                     </select>
                 </div>
                 <div className="mb-4">
@@ -121,7 +144,7 @@ const Modal = ({ product, isOpen, onClose, onAddToCart }) => {
                     />
                 </div>
                 <div className="flex justify-end">
-                    <button onClick={handleAddToCart} className="bg-blue-500 text-white px-4 py-2 rounded mr-2">
+                    <button onClick={handleAddToCart} disabled={isButtonDisabled} className="bg-blue-500 text-white px-4 py-2 rounded mr-2">
                         Add to Cart
                     </button>
                     <button onClick={onClose} className="bg-gray-300 text-black px-4 py-2 rounded">
