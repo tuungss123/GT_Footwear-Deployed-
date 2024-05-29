@@ -12,9 +12,10 @@ class OrderSerializer(serializers.ModelSerializer):
         model = Order
         fields = '__all__'
 class SizeSerializer(serializers.ModelSerializer):
+    product = ProductSerializer()
     class Meta:
         model = Size
-        fields = ['id', 'size', 'quantity_available']
+        fields = '__all__'
 
 class CartSerializer(serializers.ModelSerializer):
     product = ProductSerializer()
