@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const Cart = () => {
     const [cart, setCart] = useState([]);
     const [selectedItems, setSelectedItems] = useState([]);
-
+    
     useEffect(() => {
         axios.get('http://127.0.0.1:8000/gt/cart/items/', { withCredentials: true })
             .then(response => {
@@ -16,9 +16,14 @@ const Cart = () => {
             });
     }, []);
 
-    const handleDelete = (id) => {
-        setCart(cart.filter(item => item.id !== id));
-    };
+    const handleDelete = (id) => 
+         {
+             axios.delete(`http://127.0.0.1:8000/gt/cart/remove/${id}`,{withCredentials:true})
+            .then(response => {
+            setCart(cart.filter(item => item.id !== id));
+            console.log(response.data)
+          })
+        }
 
     const handleSelectAll = (event) => {
         if (event.target.checked) {
