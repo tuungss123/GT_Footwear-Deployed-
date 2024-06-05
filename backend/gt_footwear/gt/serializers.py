@@ -24,6 +24,14 @@ class CartSerializer(serializers.ModelSerializer):
         model = Cart
         fields = '__all__'
 
+class UpdateCartSerializer(serializers.ModelSerializer):
+    product = ProductSerializer(required=False)
+    size = SizeSerializer(required=False)
+    class Meta:
+        model = Cart
+        fields = '__all__'
+
+
 class OrderItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderItem
