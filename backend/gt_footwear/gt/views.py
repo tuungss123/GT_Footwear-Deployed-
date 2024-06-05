@@ -2,7 +2,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from .models import Product, Cart, OrderItem, Size
-from .serializers import ProductSerializer, OrderSerializer, CartSerializer, OrderItemSerializer, SizeSerializer
+from .serializers import ProductSerializer, OrderSerializer, CartSerializer, UpdateCartSerializer, SizeSerializer
 from django.shortcuts import get_object_or_404
 
 
@@ -42,7 +42,7 @@ def create_order(request):
 @api_view(['PUT'])
 def update_cart_item(request, pk):
     cart_item = get_object_or_404(Cart, pk=pk, session_key=request.session.session_key)
-    serializer = CartSerializer(cart_item, data=request.data)
+    serializer = UpdateCartSerializer(cart_item, data=request.data)
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data)
