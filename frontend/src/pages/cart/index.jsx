@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const Cart = () => {
     const [cart, setCart] = useState([]);
     const [selectedItems, setSelectedItems] = useState([]);
-    
+
     useEffect(() => {
         axios.get('http://127.0.0.1:8000/gt/cart/items/', { withCredentials: true })
             .then(response => {
@@ -39,7 +39,57 @@ const Cart = () => {
         } else {
             setSelectedItems([...selectedItems, id]);
         }
-    };
+        
+    };  
+    const handleAddQuantity = (id, quantity) => {
+        (async () => {
+            try {
+                const newQuantity = parseInt(quantity, 10) + 1;
+    
+                await axios.put(`http://127.0.0.1:8000/gt/cart/update/${id}/`, {
+                    quantity: newQuantity
+                }, {
+                    withCredentials: true
+                });
+    
+                const updatedCart = cart.map(item => {
+                    if (item.id === id) {
+                        return { ...item, quantity: newQuantity };
+                    }
+                    return item;
+                });
+                setCart(updatedCart);
+            } catch (error) {
+                console.error('Error updating item quantity:', error);
+            }
+        })();
+    }
+    const handleMinusQuantity = (id, quantity) => {
+        (async () => {
+            try {
+                const newQuantity = parseInt(quantity, 10) - 1;
+    
+                await axios.put(`http://127.0.0.1:8000/gt/cart/update/${id}/`, {
+                    quantity: newQuantity
+                }, {
+                    withCredentials: true
+                });
+    
+                const updatedCart = cart.map(item => {
+                    if (item.id === id) {
+                        return { ...item, quantity: newQuantity };
+                    }
+                    return item;
+                });
+                setCart(updatedCart);
+            } catch (error) {
+                console.error('Error updating item quantity:', error);
+            }
+        })();
+    }
+    
+    
+ 
 
     return (
         <div className="flex flex-row p-6 bg-gray-100 min-h-screen">
@@ -69,7 +119,11 @@ const Cart = () => {
                             <p className="text-lg font-semibold">{item.product.name}</p>
                             <p className="text-gray-600">Men `&apos;`s Shoes</p>
                             <p className="text-gray-600">Size: {item.size.size}</p>
+                            <div>
                             <p className="text-gray-600">Quantity: {item.quantity}</p>
+                            <button onClick={() => handleAddQuantity(item.id, item.quantity)}>+</button>
+                            <button onClick={() => handleMinusQuantity(item.id, item.quantity)}>-</button>
+                            </div>
                         </div>
                         <div className="text-right">
                             <p className="text-xl font-bold">₱{item.product.price}</p>
