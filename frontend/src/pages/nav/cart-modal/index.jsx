@@ -61,12 +61,28 @@ const CartModal = () => {
             console.error('Error updating item quantity:', error);
         }
     }
+
+    const handleMinusQuantity = async (id, quantity) => {
+        try {
+            const newQuantity = parseInt(quantity, 10) - 1;
+
+            await axios.put(`http://127.0.0.1:8000/gt/cart/update/${id}/`, {
+                quantity: newQuantity
+            }, {
+                withCredentials: true
+            });
+            fetchCartItems();
+        } catch (error) {
+            console.error('Error updating item quantity:', error);
+        }
+    }
     
 
     return (
         <div className="overflow-auto h-[500px] text-center">
             <div>
-                <button onClick={handleClearCart}>Clear Cart</button>
+                <button className="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline"
+                 onClick={handleClearCart}>Clear Cart</button>
             </div>
             {cart.map(item => (
                 <div key={item.id} className="flex flex-col items-center">
@@ -75,12 +91,14 @@ const CartModal = () => {
                     <p>Size: {item.size.size}</p>
                     <p>Quantity</p>
                     <div className="flex flex-row">
-                        <button className="">
+                        <button
+                        disabled={item.quantity == 0}
+                        >
                             <FontAwesomeIcon 
                                 icon={faMinus} 
-                                style={{ fontSize: '15px', color: 'black', cursor: 'pointer' }} 
-                                
-                            />
+                                style={{ fontSize: '15px', color: 'black', cursor: 'pointer' }}
+                                onClick={() => {handleMinusQuantity(item.id, item.quantity)}}
+                                 />
                         </button>
                         <p className="p-2 text-xl">{item.quantity}</p>
                         <button className="">
