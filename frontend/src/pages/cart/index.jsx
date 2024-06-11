@@ -20,6 +20,7 @@ const Cart = () => {
         fetchCartItems();
     }, []);
 
+
     const handleDelete =  async (id) => 
          {
             await axios.delete(`http://127.0.0.1:8000/gt/cart/remove/${id}`,{withCredentials:true})
@@ -47,19 +48,10 @@ const Cart = () => {
             try {
                 const newQuantity = parseInt(quantity, 10) + 1;
     
-                await axios.put(`http://127.0.0.1:8000/gt/cart/update/${id}/`, {
-                    quantity: newQuantity
-                }, {
-                    withCredentials: true
-                });
-    
-                const updatedCart = cart.map(item => {
-                    if (item.id === id) {
-                        return { ...item, quantity: newQuantity };
-                    }
-                    return item;
-                });
-                setCart(updatedCart);
+                await axios.put(`http://127.0.0.1:8000/gt/cart/update/${id}/`, 
+                {quantity: newQuantity},
+                {withCredentials: true});
+                            fetchCartItems()
             } catch (error) {
                 console.error('Error updating item quantity:', error);
             }
@@ -70,19 +62,10 @@ const Cart = () => {
             try {
                 const newQuantity = parseInt(quantity, 10) - 1;
     
-                await axios.put(`http://127.0.0.1:8000/gt/cart/update/${id}/`, {
-                    quantity: newQuantity
-                }, {
-                    withCredentials: true
-                });
-    
-                const updatedCart = cart.map(item => {
-                    if (item.id === id) {
-                        return { ...item, quantity: newQuantity };
-                    }
-                    return item;
-                });
-                setCart(updatedCart);
+                await axios.put(`http://127.0.0.1:8000/gt/cart/update/${id}/`,
+                {quantity: newQuantity },
+                { withCredentials: true });
+                          fetchCartItems()
             } catch (error) {
                 console.error('Error updating item quantity:', error);
             }
@@ -118,12 +101,13 @@ const Cart = () => {
                         <img className="w-20 h-20 object-contain" src={item.product.picture_url} alt={item.product.name} />
                         <div className="flex flex-col ml-4 flex-grow">
                             <p className="text-lg font-semibold">{item.product.name}</p>
-                            <p className="text-gray-600">Men `&apos;`s Shoes</p>
+                            <p className="text-gray-600">Men&apos;s Shoes</p>
                             <p className="text-gray-600">Size: {item.size.size}</p>
                             <div>
                             <p className="text-gray-600">Quantity: {item.quantity}</p>
                             <button onClick={() => handleAddQuantity(item.id, item.quantity)}>+</button>
-                            <button onClick={() => handleMinusQuantity(item.id, item.quantity)}>-</button>
+                            <button disabled={item.quantity == 0} 
+                            onClick={() => handleMinusQuantity(item.id, item.quantity)}>-</button>
                             </div>
                         </div>
                         <div className="text-right">
@@ -139,7 +123,7 @@ const Cart = () => {
                 ))}
             </div>
 
-            <div className="w-1/3 p-4 bg-white shadow-lg rounded-lg">
+            <div className="w-1/3 p-4 bg-white shadow-lg rounded-lg h-40">
                 <h2 className="text-2xl font-bold mb-4">Summary</h2>
                 <div className="flex justify-between items-center mb-4">
                     <div className="text-lg font-bold">Total</div>
