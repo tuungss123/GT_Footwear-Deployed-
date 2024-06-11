@@ -6,7 +6,7 @@ const Cart = () => {
     const [cart, setCart] = useState([]);
     const [selectedItems, setSelectedItems] = useState([]);
 
-    useEffect(() => {
+    const fetchCartItems = () => {
         axios.get('http://127.0.0.1:8000/gt/cart/items/', { withCredentials: true })
             .then(response => {
                 setCart(response.data);
@@ -14,15 +14,16 @@ const Cart = () => {
             .catch(error => {
                 console.error('Error fetching Cart Items:', error);
             });
+    }
+
+    useEffect(() => {
+        fetchCartItems();
     }, []);
 
-    const handleDelete = (id) => 
+    const handleDelete =  async (id) => 
          {
-             axios.delete(`http://127.0.0.1:8000/gt/cart/remove/${id}`,{withCredentials:true})
-            .then(response => {
-            setCart(cart.filter(item => item.id !== id));
-            console.log(response.data)
-          })
+            await axios.delete(`http://127.0.0.1:8000/gt/cart/remove/${id}`,{withCredentials:true})
+            fetchCartItems()
         }
 
     const handleSelectAll = (event) => {

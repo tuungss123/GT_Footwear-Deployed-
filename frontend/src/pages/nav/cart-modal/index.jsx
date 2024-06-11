@@ -51,11 +51,9 @@ const CartModal = () => {
         try {
             const newQuantity = parseInt(quantity, 10) + 1;
 
-            await axios.put(`http://127.0.0.1:8000/gt/cart/update/${id}/`, {
-                quantity: newQuantity
-            }, {
-                withCredentials: true
-            });
+            await axios.put(`http://127.0.0.1:8000/gt/cart/update/${id}/`, 
+            {quantity: newQuantity}, {withCredentials: true}
+        );
             fetchCartItems();
         } catch (error) {
             console.error('Error updating item quantity:', error);
