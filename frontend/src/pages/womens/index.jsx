@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 
 
-const MensPage = () => {
+const WomensPage = () => {
     const [products, setProducts] = useState([]);
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -51,9 +51,9 @@ const MensPage = () => {
     return (
         <div className="h-auto flex justify-center flex-wrap m-10">
             {products.map(product => {
-                if (product.gender === "Mens") {
+                if (product.gender === "Womens") {
                     const productNameWords = product.name.split(' ');
-                    const filteredName = productNameWords.filter(word => word !== 'Mens').join(' ');
+                    const filteredName = productNameWords.filter(word => word !== 'Womens').join(' ');
                     return (
                         <div key={product.id} className="w-[200px] h-[320px] rounded overflow-hidden shadow-lg m-4">
                             <img className="w-[200px]" src={product.picture_url} alt={product.name} />
@@ -184,4 +184,4 @@ const Modal = ({ product, isOpen, onClose, onAddToCart }) => {
     );
 };
 
-export default MensPage;
+export default WomensPage;

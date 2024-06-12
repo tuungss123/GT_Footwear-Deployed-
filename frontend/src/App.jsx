@@ -5,6 +5,7 @@ import Footer from './pages/footer';
 import MensPage from './pages/mens';
 import Cart from './pages/cart';
 import NewArrivals from './pages/new-arrivals'
+import WomensPage from './pages/womens';
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/mens" element={<MensPage />} />
+        <Route path="/womens" element={<WomensPage />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/new-arrivals" element={<NewArrivals />} />
       </Routes>
