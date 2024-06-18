@@ -76,8 +76,8 @@ const Cart = () => {
  
 
     return (
-        <div className="flex flex-row p-6 bg-gray-100 min-h-screen">
-            <div className="flex flex-col w-2/3 pr-6">
+        <div className="flex flex-col md:flex-row p-6 bg-gray-100 min-h-screen">
+            <div className="flex flex-col w-full md:w-2/3 pr-0 md:pr-6">
                 <h1 className="text-3xl font-bold mb-4">Cart({cart.length})</h1>
                 <div className="flex justify-between items-center border-b pb-4 mb-4">
                     <label className="flex items-center">
@@ -91,7 +91,7 @@ const Cart = () => {
                     </label>
                 </div>
                 {cart.map(item => (
-                    <div key={item.id} className="flex items-center justify-between bg-white p-4 mb-4 shadow-lg rounded-lg">
+                    <div key={item.id} className="flex flex-col md:flex-row items-center justify-between bg-white p-4 mb-4 shadow-lg rounded-lg">
                         <input 
                             type="checkbox" 
                             className="mr-2" 
@@ -103,12 +103,13 @@ const Cart = () => {
                             <p className="text-lg font-semibold">{item.product.name}</p>
                             <p className="text-gray-600">Men&apos;s Shoes</p>
                             <p className="text-gray-600">Size: {item.size.size}</p>
-                            <div>
-                            <p className="text-gray-600">Quantity: {item.quantity}</p>
-                            <button onClick={() => handleAddQuantity(item.id, item.quantity)}>+</button>
-                            <button disabled={item.quantity == 0} 
-                            onClick={() => handleMinusQuantity(item.id, item.quantity)}>-</button>
-                            </div>
+                            <div className="flex items-center">
+                                <p className="text-gray-600">Quantity: {item.quantity}</p>
+                                <div className="flex ml-1">
+                                    <button className="pr-1 text-gray-600 hover:text-black" onClick={() => handleAddQuantity(item.id, item.quantity)}>+</button>
+                                    <button className="text-gray-600 hover:text-black" disabled={item.quantity === 1} onClick={() => handleMinusQuantity(item.id, item.quantity)}>-</button>
+                                </div>
+                            </div>                        
                         </div>
                         <div className="text-right">
                             <p className="text-xl font-bold">₱{item.product.price}</p>
@@ -123,13 +124,13 @@ const Cart = () => {
                 ))}
             </div>
 
-            <div className="w-1/3 p-4 bg-white shadow-lg rounded-lg h-40">
+            <div className="w-full md:w-1/3 p-4 bg-white shadow-lg rounded-lg mt-4 md:mt-0 h-auto md:h-40">
                 <h2 className="text-2xl font-bold mb-4">Summary</h2>
                 <div className="flex justify-between items-center mb-4">
                     <div className="text-lg font-bold">Total</div>
                     <div className="text-2xl font-bold">₱{cart.reduce((total, item) => total + item.product.price * item.quantity, 0)}</div>
                 </div>
-                <button className="w-full bg-black text-white px-6 py-2 rounded-lg">CHECKOUT</button>
+                <button className="w-full bg-black text-white px-6 py-2 rounded-lg hover:bg-gray-800">CHECKOUT</button>
             </div>
         </div>
     );
