@@ -1,6 +1,11 @@
 from rest_framework import serializers
-from .models import Product, Order, Cart, OrderItem, Size
+from .models import Product, Order, Cart, OrderItem, Size, Brand
 
+
+class BrandsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Brand
+        fields = '__all__'
 class ProductSerializer(serializers.ModelSerializer):
     brand_name = serializers.CharField(source='brand.name', read_only=True)
     class Meta:
