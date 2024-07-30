@@ -1,14 +1,17 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart, faBars } from '@fortawesome/free-solid-svg-icons';
 import CartModal from './cart-modal';
 import BurgerMenu from './burger-menu';
+import axios from 'axios';
 
 
 const Navbar = () => {
   const [showCart, setShowCart] = useState(false);
+  const [showBrands, setShowBrands] = useState(false);
   const [showBurger, setShowBurger] = useState(false);
+  const [brands, setBrands] = useState([]);
   const timeoutRef = useRef(null);
   const handleMouseEnter = () => {
     if (timeoutRef.current) {
@@ -24,9 +27,34 @@ const Navbar = () => {
     }, 200); 
   };
 
+  const handleBrandsEnter = () => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
+    setShowBrands(true);
+    console.log(brands)
+  };
+
+  const handleBrandsLeave = () => {
+    timeoutRef.current = setTimeout(() => {
+      setShowBrands(false);
+    }, 200); 
+  };
+
   const handleBurgerMenu = () =>{
     setShowBurger(toggleState => !toggleState)
   }
+
+  useEffect(() => {
+    axios.get('http://127.0.0.1:8000/gt/brands/')
+        .then(response => {
+            setBrands(response.data);
+        })
+        .catch(error => {
+            console.error('Error fetching Brands List:', error);
+        });
+  }, []);
 
   return (
     <div>
@@ -43,9 +71,28 @@ const Navbar = () => {
             <Link to="/new-arrivals" className="text-gray-800 hover:text-blue-500 px-3 py-2 text-lg">
               New Arrivals
             </Link>
-            <Link to="/brands" className="text-gray-800 hover:text-blue-500 px-3 py-2 text-lg">
-              Brands
-            </Link>
+            <div
+              onMouseEnter={handleBrandsEnter}
+              onMouseLeave={handleBrandsLeave}
+              className="relative cursor-pointer">
+              <Link to="/brands" className="text-gray-800 hover:text-blue-500 px-3 py-2 text-lg">
+                Brands
+                {showBrands && (
+                  <div
+                    className="xs:hidden md:block text-[17px] absolute mt-2 w-40 p-4 rounded-md bg-white border border-gray-300 shadow-lg z-10 "
+                    onMouseEnter={handleBrandsEnter}
+                    onMouseLeave={handleBrandsLeave}>
+                      
+                      {brands.map(brands=>(
+                        <div key={brands.id}>
+                          <Link className='text-black' to={brands.name}>{brands.name}</Link>
+                        </div>
+                      ))}
+
+                  </div>
+                )}
+              </Link>
+            </div>
           </div>
           <div className="flex justify-center xs:w-[100px] items-center w-full md:w-auto mb-2 md:mb-0">
             <Link to="/">

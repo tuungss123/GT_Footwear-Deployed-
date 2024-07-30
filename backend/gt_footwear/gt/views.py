@@ -1,8 +1,8 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Product, Cart, OrderItem, Size
-from .serializers import ProductSerializer, OrderSerializer, CartSerializer, UpdateCartSerializer, SizeSerializer
+from .models import Product, Cart, OrderItem, Size, Brand
+from .serializers import ProductSerializer, OrderSerializer, CartSerializer, UpdateCartSerializer, SizeSerializer, BrandsSerializer
 from django.shortcuts import get_object_or_404
 
 
@@ -91,4 +91,10 @@ def get_cart_items(request):
     
     cart_items = Cart.objects.filter(session_key=session_key)
     serializer = CartSerializer(cart_items, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def get_brand(request):
+    brands = Brand.objects.all()
+    serializer = BrandsSerializer(brands, many=True)
     return Response(serializer.data)
