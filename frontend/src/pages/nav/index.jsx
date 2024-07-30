@@ -35,7 +35,7 @@ const Navbar = () => {
         Welcome to our store
       </div>
       <div className="container mx-auto">
-        <nav className="flex md:flex-row justify-around items-center px-4 py-2">
+        <nav className="flex md:flex-row justify-around items-center md:ml-7 lg:ml-10 px-4 py-2">
           <div className="md:flex xs:hidden items-center space-x-4 mb-2 md:mb-0 md:mr-10 lg:mr-0">
             <Link to="/" className="text-gray-800 hover:text-blue-500 px-3 py-2 text-lg">
               Home
