@@ -6,6 +6,9 @@ import MensPage from './pages/mens';
 import Cart from './pages/cart';
 import NewArrivals from './pages/new-arrivals'
 import WomensPage from './pages/womens';
+import JordanPage from './pages/brands/jordan';
+import NikePage from './pages/brands/nike';
+import AdidasPage from './pages/brands/adidas';
 
 const App = () => {
   return (
@@ -19,6 +22,9 @@ const App = () => {
         <Route path="/womens" element={<WomensPage />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/new-arrivals" element={<NewArrivals />} />
+        <Route path="/Jordan" element={<JordanPage />} />
+        <Route path="/Nike" element={<NikePage />} />
+        <Route path="/Adidas" element={<AdidasPage />} />
       </Routes>
       <Footer/>
     </Router>
