@@ -47,11 +47,7 @@ const NewArrivals = () => {
 
     return (
         <div>
-        <div className="flex justify-center">
-        <img className="flex w-full h-[250px]" src="https://starboyclothify.shop/wp-content/uploads/2023/10/shoes-sale-Banner-Landscape-4-1024x512.png" alt= "banner" />
-        </div>
         <div className='flex justify-center'>
-
             <div className="w-full max-w-screen-lg">
                 <div className='font-bold text-3xl mb-4 ml-4'>New Arrivals</div>
                 <div className="h-auto flex flex-wrap justify-center">
@@ -67,9 +63,7 @@ const NewArrivals = () => {
                                     <FontAwesomeIcon 
                                      icon={faShoppingCart} 
                                      style={{ fontSize: '20px', color: 'gray', cursor: 'pointer' }} 
-                                         onClick={() => openModal(product)} /> 
-                                                                                       
-         
+                                         onClick={() => openModal(product)} />                                                      
                           </div>
                             </div>
                         </div>
