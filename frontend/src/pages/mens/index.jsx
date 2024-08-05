@@ -10,6 +10,7 @@ const MensPage = () => {
     const [products, setProducts] = useState([]);
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [sortOption, setSortOption] = useState(''); // Add state for sort option
 
     useEffect(() => {
         axios.get('http://127.0.0.1:8000/gt/products/')
@@ -38,18 +39,36 @@ const MensPage = () => {
                 quantity,
                 size
             },{
-                withCredentials:true
+                withCredentials: true
             });
             console.log('Product added to cart:', response.data);
-            
         } catch (error) {
             console.error('Error adding product to cart:', error);
-            
+        }
+    };
+
+
+    const handleSortChange = (e) => {
+        const value = e.target.value;
+        setSortOption(value);
+        if (value === 'lowToHigh') {
+            setProducts([...products].sort((a, b) => a.price - b.price));
+        } else if (value === 'highToLow') {
+            setProducts([...products].sort((a, b) => b.price - a.price));
         }
     };
 
     return (
+        
         <div className="h-auto flex justify-center flex-wrap m-10">
+            <div className="w-full flex  justify-end mb-4  ">
+                <select onChange={handleSortChange} value={sortOption} className="p-2 border rounded">
+                    <option className='hidden' value="">Sort by</option>
+                    <option value="lowToHigh">Price: Low to High</option>
+                    <option value="highToLow">Price: High to Low</option>
+                </select>
+            </div>
+            
             {products.map(product => {
                 if (product.gender === "Mens") {
                     const productNameWords = product.name.split(' ');
@@ -91,8 +110,8 @@ const MensPage = () => {
 const Modal = ({ product, isOpen, onClose, onAddToCart }) => {
     const [quantity, setQuantity] = useState(1);
     const [size, setSize] = useState('');
-    const [availableSizes, setAvailableSizes] = useState([])
-    const [isButtonDisabled, setIsButtonDisabled] = useState(true)
+    const [availableSizes, setAvailableSizes] = useState([]);
+    const [isButtonDisabled, setIsButtonDisabled] = useState(true);
     const [selectedSize, setSelectedSize] = useState(null);
 
     useEffect(() => {
@@ -139,8 +158,8 @@ const Modal = ({ product, isOpen, onClose, onAddToCart }) => {
                     <div className="mb-4">
                         <label className="block mb-2">Size</label>
                         <div className="flex flex-wrap">
-                                {availableSizes.map(size => (
-                                    <div key={size.id}>
+                            {availableSizes.map(size => (
+                                <div key={size.id}>
                                     <button
                                         value={size.id}
                                         onClick={() => handleSizeClick(size.id)}
@@ -150,7 +169,7 @@ const Modal = ({ product, isOpen, onClose, onAddToCart }) => {
                                         {size.size}
                                     </button>
                                 </div>
-                                ))}
+                            ))}
                         </div>
                     </div>
                     <div className="mb-4">
