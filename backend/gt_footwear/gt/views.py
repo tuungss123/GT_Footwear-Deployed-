@@ -141,26 +141,34 @@ def add_to_cart(request):
     try:
         if not request.session.session_key:
             request.session.save()
-            
         session_key = request.session.session_key
 
         product_id = request.data.get('product')
         quantity = request.data.get('quantity')
         size_id = request.data.get('size')
 
-        cart_item = Cart.objects.create(
+        cart_item = Cart.objects.filter(
             product_id=product_id,
-            quantity=quantity,
             size_id=size_id,
             session_key=session_key
-        )
+        ).first()
+
+        if cart_item:
+            cart_item.quantity += int(quantity)
+            cart_item.save()
+        else:
+            cart_item = Cart.objects.create(
+                product_id=product_id,
+                quantity=quantity,
+                size_id=size_id,
+                session_key=session_key
+            )
 
         serializer = CartSerializer(cart_item)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     except Exception as e:
         return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
 @api_view(['GET'])
 def get_cart_items(request):
     session_key = request.session.session_key
