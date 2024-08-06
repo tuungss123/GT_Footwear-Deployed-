@@ -6,6 +6,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const Cart = () => {
     const [cart, setCart] = useState([]);
     const [selectedItems, setSelectedItems] = useState([]);
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [email, setEmail] = useState('');
+    const [phone, setPhone] = useState('');
+    const [address, setAddress] = useState('');
 
     const fetchCartItems = () => {
         axios.get('http://127.0.0.1:8000/gt/cart/items/', { withCredentials: true })
@@ -66,6 +71,33 @@ const Cart = () => {
         })();
     };
 
+    const handleCheckout = async () => {
+        try {
+            const totalAmount = cart.reduce((total, item) => total + item.product.price * item.quantity, 0);
+
+            const orderResponse = await axios.post('http://127.0.0.1:8000/gt/order/create/', {
+                first_name: firstName,
+                last_name: lastName,
+                email: email,
+                phone: phone,
+                address: address,
+                total_amount: totalAmount,
+                items: cart.map(item => ({ id: item.id, quantity: item.quantity }))
+            }, { withCredentials: true });
+
+            const orderId = orderResponse.data.id;
+
+            const checkoutResponse = await axios.post('http://127.0.0.1:8000/gt/checkout/create/', {
+                amount: totalAmount,
+                order_id: orderId
+            }, { withCredentials: true });
+
+            window.location.href = checkoutResponse.data.checkout_url;
+        } catch (error) {
+            console.error('Error initiating checkout session:', error);
+        }
+    };
+
     return (
         <div className="flex flex-col md:flex-row p-6 bg-gray-100 min-h-screen">
             <div className="flex flex-col w-full md:w-2/3 pr-0 md:pr-6">
@@ -121,40 +153,47 @@ const Cart = () => {
                     <div className="flex flex-col">
                         <label className="mb-1 font-semibold">First Name</label>
                         <input
-                            name="fullName"
+                            name="firstName"
                             type="text"
                             placeholder="Enter your First Name"
                             className="p-2 border border-gray-300 rounded"
+                            value={firstName}
+                            onChange={(e) => setFirstName(e.target.value)}
                         />
                     </div>
                     <div className="flex flex-col">
-                        <label className="mb-1 font-semibold">Second Name</label>
+                        <label className="mb-1 font-semibold">Last Name</label>
                         <input
-                            name="fullName"
+                            name="lastName"
                             type="text"
-                            placeholder="Enter your Second Name"
+                            placeholder="Enter your Last Name"
                             className="p-2 border border-gray-300 rounded"
+                            value={lastName}
+                            onChange={(e) => setLastName(e.target.value)}
                         />
                     </div>
                     <div className="flex flex-col">
                         <label className="mb-1 font-semibold">Email</label>
                         <input
-                            name="fullName"
-                            type="text"
+                            name="email"
+                            type="email"
                             placeholder="Enter your Email"
                             className="p-2 border border-gray-300 rounded"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
                         />
                     </div>
                     <div className="flex flex-col">
                         <label className="mb-1 font-semibold">Contact Number</label>
                         <input
-                            name="fullName"
+                            name="phone"
                             type="text"
                             placeholder="Enter your Contact Number"
                             className="p-2 border border-gray-300 rounded"
+                            value={phone}
+                            onChange={(e) => setPhone(e.target.value)}
                         />
                     </div>
-
                     <div className="flex flex-col">
                         <label className="mb-1 font-semibold">Address</label>
                         <input
@@ -162,32 +201,25 @@ const Cart = () => {
                             type="text"
                             placeholder="Enter your address"
                             className="p-2 border border-gray-300 rounded"
+                            value={address}
+                            onChange={(e) => setAddress(e.target.value)}
                         />
                     </div>
-                    <div className="flex flex-col">
-                        <label className="mb-1 font-semibold">City</label>
-                        <input
-                            name="city"
-                            type="text"
-                            placeholder="Enter your city"
-                            className="p-2 border border-gray-300 rounded"
-                        />
-                    </div>
-                    </form>
-                  
-                  <h2 className="text-2xl font-bold mb-4 mt-8">Summary</h2>
+                </form>
+                <h2 className="text-2xl font-bold mb-4 mt-8">Summary</h2>
                 <div className="flex justify-between items-center mb-4">
                     <div className="text-lg font-bold">Total</div>
                     <div className="text-2xl font-bold">₱{cart.reduce((total, item) => total + item.product.price * item.quantity, 0)}</div>
                 </div>
-                <button className="w-full bg-black text-white px-6 py-2 rounded-lg hover:bg-gray-800">CHECKOUT</button>
-                </div>    
+                <button
+                    className="w-full bg-black text-white px-6 py-2 rounded-lg hover:bg-gray-800"
+                    onClick={handleCheckout}
+                >
+                    CHECKOUT
+                </button>
             </div>
-           
-                  
-                
-              
+        </div>
     );
-}
+};
 
 export default Cart;
