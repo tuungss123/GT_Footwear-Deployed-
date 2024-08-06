@@ -58,7 +58,7 @@ const Navbar = () => {
 
   return (
     <div>
-    <div className="bg-gray-100 text-center">
+    <div className="bg-white text-center">
       <div className="bg-black px-4 py-2 text-center text-white">
         Welcome to our store
       </div>
@@ -75,7 +75,7 @@ const Navbar = () => {
               onMouseEnter={handleBrandsEnter}
               onMouseLeave={handleBrandsLeave}
               className="relative cursor-pointer">
-              <Link to="/brands" className="text-gray-800 hover:text-blue-500 px-3 py-2 text-lg">
+              <Link className="text-gray-800 hover:text-blue-500 px-3 py-2 text-lg">
                 Brands
                 {showBrands && (
                   <div
