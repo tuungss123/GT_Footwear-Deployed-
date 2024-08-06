@@ -132,7 +132,7 @@ const Navbar = () => {
                 <div
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
-                className="xs:hidden xl:block absolute right-0 mt-2 w-64 p-4 bg-white border border-gray-300 shadow-lg z-10 ">
+                className="xs:hidden xl:block absolute right-12 w-[400px] p-4 bg-white border border-gray-300 shadow-lg z-10 ">
                   <CartModal />
                 </div>
               )}

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
+import {faMinus, faPlus} from '@fortawesome/free-solid-svg-icons';
 
 const CartModal = () => {
     const [cart, setCart] = useState([]);
@@ -24,17 +24,6 @@ const CartModal = () => {
     useEffect(() => {
         fetchCartItems();
     }, []);
-
-    const handleClearCart = async () => {
-        try {
-             await axios.delete(`http://127.0.0.1:8000/gt/cart/clear/`, {
-                withCredentials: true
-            });
-            fetchCartItems();
-        } catch (error) {
-            console.error('Error clearing cart:', error);
-        }
-    };
 
     const handleDeleteItem = async (id) => {
         try {
@@ -64,6 +53,10 @@ const CartModal = () => {
         try {
             const newQuantity = parseInt(quantity, 10) - 1;
 
+            if(newQuantity == 0){
+                handleDeleteItem(id)
+            }
+
             await axios.put(`http://127.0.0.1:8000/gt/cart/update/${id}/`, {
                 quantity: newQuantity
             }, {
@@ -77,49 +70,48 @@ const CartModal = () => {
     
 
     return (
-        <div className="overflow-auto h-[500px] text-center">
-            <div>
-                <button className="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline"
-                 onClick={handleClearCart}>Clear Cart</button>
+        <div className="overflow-auto h-auto">
+            <div className="mb-2">
+                <p className="mb-2 font-bold text-lg">Your Cart</p>
+                <hr></hr>
             </div>
             {cart.map(item => (
-                <div key={item.id} className="flex flex-col items-center">
-                    <img className="w-20" src={item.product.picture_url} alt={item.product.name} />
-                    <p>Name: {item.product.name}</p>
-                    <p>Size: {item.size.size}</p>
-                    <p>Quantity</p>
-                    <div className="flex flex-row">
-                        <button
-                        disabled={item.quantity == 0}
-                        >
-                            <FontAwesomeIcon 
-                                icon={faMinus} 
-                                style={{ fontSize: '15px', color: 'black', cursor: 'pointer' }}
-                                onClick={() => {handleMinusQuantity(item.id, item.quantity)}}
-                                 />
-                        </button>
-                        <p className="p-2 text-xl">{item.quantity}</p>
-                        <button className="">
-                            <FontAwesomeIcon 
-                                icon={faPlus} 
-                                style={{ fontSize: '15px', color: 'black', cursor: 'pointer' }} 
-                                onClick={() => {handlePlusQuantity(item.id,item.quantity)}}
-                            />
-                        </button>
-                    </div>
-                    <p>Price: {item.product.price}</p>
+                <div key={item.id} className="flex flex-row">
+                        <div className="w-[40%]">
+                            <img className="w-[80%]" src={item.product.picture_url} alt={item.product.name} />
+                        </div>
+                        <div className="flex flex-col w-[60%]">
+                            <p className="font-medium">{item.product.name}</p>
+                            <p>Size: {item.size.size} {item.product.gender}</p>
 
-                        <FontAwesomeIcon 
-                            icon={faTrash} 
-                            style={{ fontSize: '20px', color: 'red', cursor: 'pointer' }} 
-                            onClick={() => handleDeleteItem(item.id)}
-                            />
+                            <div className="flex flex-row">
+                                <button
+                                disabled={item.quantity == 0}
+                                >
+                                    <FontAwesomeIcon 
+                                        icon={faMinus} 
+                                        style={{ fontSize: '15px', color: 'black', cursor: 'pointer' }}
+                                        onClick={() => {handleMinusQuantity(item.id, item.quantity)}}
+                                        />
+                                </button>
+                                <p className="p-2 text-xl">{item.quantity}</p>
+                                <button className="">
+                                    <FontAwesomeIcon 
+                                        icon={faPlus} 
+                                        style={{ fontSize: '15px', color: 'black', cursor: 'pointer' }} 
+                                        onClick={() => {handlePlusQuantity(item.id,item.quantity)}}
+                                    />
+                                </button>
+                            </div>
 
+                            <p>₱{item.product.price}</p>
+                        </div>
                 </div>
             ))}
 
-            <div className="mt-5">
-                <p className="font-bold text-xl">Total Price: {totalPrice}</p>
+            <div className="flex flex-row mt-5 justify-between items-center">
+                <p className="font-medium text-md">Total Price:</p>
+                <p className="font-medium text-xl"> ₱{totalPrice}</p>
             </div>
         </div>
     );
