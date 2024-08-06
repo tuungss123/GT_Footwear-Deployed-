@@ -9,7 +9,7 @@ import WomensPage from './pages/womens';
 import JordanPage from './pages/brands/jordan';
 import NikePage from './pages/brands/nike';
 import AdidasPage from './pages/brands/adidas';
-
+import ContactUs from './pages/contact-us';
 const App = () => {
   return (
     <Router>
@@ -25,6 +25,7 @@ const App = () => {
         <Route path="/Jordan" element={<JordanPage />} />
         <Route path="/Nike" element={<NikePage />} />
         <Route path="/Adidas" element={<AdidasPage />} />
+        <Route path='/contact-us' element={<ContactUs/>}/>
       </Routes>
       <Footer/>
     </Router>
