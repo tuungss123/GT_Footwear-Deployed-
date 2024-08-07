@@ -10,6 +10,7 @@ const NikePage = () => {
     const [products, setProducts] = useState([]);
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [sortOption, setSortOption] = useState('');
 
     useEffect(() => {
         axios.get('http://127.0.0.1:8000/gt/products/')
@@ -48,7 +49,30 @@ const NikePage = () => {
         }
     };
 
+    const handleSortChange = (e) => {
+        const value = e.target.value;
+        setSortOption(value);
+        if (value === 'lowToHigh') {
+            setProducts([...products].sort((a, b) => a.price - b.price));
+        } else if (value === 'highToLow') {
+            setProducts([...products].sort((a, b) => b.price - a.price));
+        }
+    };
+
     return (
+        <div>
+        <div className='flex flex-row justify-between items-center '>
+                    <p className=' font-bold text-3xl mb-4 ml-4'>New Arrivals</p>
+                    <div className="h-auto flex justify-center flex-wrap m-10">
+                        <div className="w-full flex  justify-end mb-4  ">
+                            <select onChange={handleSortChange} value={sortOption} className="p-2 border rounded">
+                                <option className='hidden' value="">Sort by</option>
+                                <option value="lowToHigh">Price: Low to High</option>
+                                <option value="highToLow">Price: High to Low</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
         <div className="h-auto flex justify-center flex-wrap m-10">
             {products.map(product => {
                 if (product.brand_name === "Nike") {
@@ -83,6 +107,7 @@ const NikePage = () => {
                     onAddToCart={addToCart}
                 />
             )}
+        </div>
         </div>
     );
 };

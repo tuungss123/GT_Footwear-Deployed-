@@ -10,7 +10,7 @@ const MensPage = () => {
     const [products, setProducts] = useState([]);
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [sortOption, setSortOption] = useState(''); // Add state for sort option
+    const [sortOption, setSortOption] = useState('');
 
     useEffect(() => {
         axios.get('http://127.0.0.1:8000/gt/products/')
