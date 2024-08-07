@@ -33,7 +33,6 @@ const Navbar = () => {
       timeoutRef.current = null;
     }
     setShowBrands(true);
-    console.log(brands)
   };
 
   const handleBrandsLeave = () => {
@@ -79,7 +78,7 @@ const Navbar = () => {
                 Brands
                 {showBrands && (
                   <div
-                    className="xs:hidden md:block text-[17px] absolute mt-2 w-40 p-4 rounded-md bg-white border border-gray-300 shadow-lg z-10 "
+                    className="xs:hidden md:block text-[17px] absolute mt-3 w-40 p-4 rounded-md bg-white border border-gray-300 shadow-lg"
                     onMouseEnter={handleBrandsEnter}
                     onMouseLeave={handleBrandsLeave}>
                       
