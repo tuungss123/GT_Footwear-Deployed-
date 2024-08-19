@@ -9,8 +9,10 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
-
+import dj_database_url
+import os
 from pathlib import Path
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,12 +22,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-v^3x$@hz07=ysx*3kk-bns=9k(_-8df8dsvhh6$#vkn#ai4*03'
-
+SECRET_KEY = os.environ.get("SECRET_KEY")
+PAYMONGO_API_KEY = os.environ.get("PAYMONGO_API_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS")
 
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
@@ -86,17 +88,21 @@ WSGI_APPLICATION = 'gt_footwear.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'gt_footwear',
-        'USER': 'root',
-        'PASSWORD': '1234',
-        'HOST': 'localhost',
-        'PORT': '3306',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'gt_footwear',
+#         'USER': 'root',
+#         'PASSWORD': '1234',
+#         'HOST': 'localhost',
+#         'PORT': '3306',
+#     }
+# }
 
+database_url = os.environ.get("database_url")
+DATABASES = {
+    'default': dj_database_url.parse(database_url)
+}
 
 
 # Password validation
