@@ -164,4 +164,4 @@ SESSION_COOKIE_HTTPONLY = True
 # CSRF_COOKIE_SECURE = True
 # CSRF_COOKIE_SAMESITE = 'Lax'
 
-# CSRF_TRUSTED_ORIGINS = ['http://localhost:5173', 'http://127.0.0.1:8000']
+# CSRF_TRUSTED_ORIGINS = ['http://localhost:5173', 'https://gt-footwear-deployed.onrender.com']
