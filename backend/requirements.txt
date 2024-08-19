@@ -1,6 +1,7 @@
 ﻿asgiref==3.8.1
 certifi==2024.7.4
 charset-normalizer==3.3.2
+daphne==4.0.0
 dj-database-url==2.2.0
 Django==5.0.4
 django-cors-headers==4.3.1
@@ -8,7 +9,6 @@ django-jazzmin==3.0.0
 djangorestframework==3.15.1
 djangorestframework-simplejwt==5.3.1
 gunicorn==19.7.1
-uwsgi==2.0.20
 idna==3.7
 mysql-connector-python==8.4.0
 mysqlclient==2.2.4
