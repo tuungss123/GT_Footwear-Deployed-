@@ -96,7 +96,7 @@ const Navbar = () => {
           </div>
           <div className="flex justify-center xs:w-[100px] items-center w-full md:w-auto mb-2 md:mb-0">
             <Link to="/">
-              <img src={Logo} alt="Logo" className="h-auto w-20 md:w-[120px]" />
+              <img src={Logo} alt="Logo" className="h-auto w-32 md:w-[120px]" />
             </Link>
           </div>
           <div className="flex items-center space-x-4 md:flex xs:hidden">
