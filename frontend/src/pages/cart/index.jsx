@@ -13,7 +13,7 @@ const Cart = () => {
     const [address, setAddress] = useState('');
 
     const fetchCartItems = () => {
-        axios.get('http://127.0.0.1:8000/gt/cart/items/', { withCredentials: true })
+        axios.get('https://gt-footwear-deployed.onrender.com/gt/cart/items/', { withCredentials: true })
             .then(response => {
                 setCart(response.data);
             })
@@ -27,7 +27,7 @@ const Cart = () => {
     }, []);
 
     const handleDelete = async (id) => {
-        await axios.delete(`http://127.0.0.1:8000/gt/cart/remove/${id}`, { withCredentials: true });
+        await axios.delete(`https://gt-footwear-deployed.onrender.com/gt/cart/remove/${id}`, { withCredentials: true });
         fetchCartItems();
     };
 
@@ -51,7 +51,7 @@ const Cart = () => {
         (async () => {
             try {
                 const newQuantity = parseInt(quantity, 10) + 1;
-                await axios.put(`http://127.0.0.1:8000/gt/cart/update/${id}/`, { quantity: newQuantity }, { withCredentials: true });
+                await axios.put(`https://gt-footwear-deployed.onrender.com/gt/cart/update/${id}/`, { quantity: newQuantity }, { withCredentials: true });
                 fetchCartItems();
             } catch (error) {
                 console.error('Error updating item quantity:', error);
@@ -63,7 +63,7 @@ const Cart = () => {
         (async () => {
             try {
                 const newQuantity = parseInt(quantity, 10) - 1;
-                await axios.put(`http://127.0.0.1:8000/gt/cart/update/${id}/`, { quantity: newQuantity }, { withCredentials: true });
+                await axios.put(`https://gt-footwear-deployed.onrender.com/gt/cart/update/${id}/`, { quantity: newQuantity }, { withCredentials: true });
                 fetchCartItems();
             } catch (error) {
                 console.error('Error updating item quantity:', error);
@@ -75,7 +75,7 @@ const Cart = () => {
         try {
             const totalAmount = cart.reduce((total, item) => total + item.product.price * item.quantity, 0);
 
-            const orderResponse = await axios.post('http://127.0.0.1:8000/gt/order/create/', {
+            const orderResponse = await axios.post('https://gt-footwear-deployed.onrender.com/gt/order/create/', {
                 first_name: firstName,
                 last_name: lastName,
                 email: email,
@@ -87,7 +87,7 @@ const Cart = () => {
 
             const orderId = orderResponse.data.id;
 
-            const checkoutResponse = await axios.post('http://127.0.0.1:8000/gt/checkout/create/', {
+            const checkoutResponse = await axios.post('https://gt-footwear-deployed.onrender.com/gt/checkout/create/', {
                 amount: totalAmount,
                 order_id: orderId
             }, { withCredentials: true });

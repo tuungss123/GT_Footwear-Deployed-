@@ -8,7 +8,7 @@ const CartModal = () => {
     const [totalPrice, setTotalPrice] = useState(0);
 
     const fetchCartItems = () => {
-        axios.get('http://127.0.0.1:8000/gt/cart/items/', { withCredentials: true })
+        axios.get('https://gt-footwear-deployed.onrender.com/gt/cart/items/', { withCredentials: true })
             .then(response => {
                 setCart(response.data);
                 const totalPrice = response.data.reduce((total, item) => {
@@ -27,7 +27,7 @@ const CartModal = () => {
 
     const handleDeleteItem = async (id) => {
         try {
-             await axios.delete(`http://127.0.0.1:8000/gt/cart/remove/${id}`, {
+             await axios.delete(`https://gt-footwear-deployed.onrender.com/gt/cart/remove/${id}`, {
                 withCredentials: true
             });
             fetchCartItems();
@@ -40,7 +40,7 @@ const CartModal = () => {
         try {
             const newQuantity = parseInt(quantity, 10) + 1;
 
-            await axios.put(`http://127.0.0.1:8000/gt/cart/update/${id}/`, 
+            await axios.put(`https://gt-footwear-deployed.onrender.com/gt/cart/update/${id}/`, 
             {quantity: newQuantity}, {withCredentials: true}
         );
             fetchCartItems();
@@ -57,7 +57,7 @@ const CartModal = () => {
                 handleDeleteItem(id)
             }
 
-            await axios.put(`http://127.0.0.1:8000/gt/cart/update/${id}/`, {
+            await axios.put(`https://gt-footwear-deployed.onrender.com/gt/cart/update/${id}/`, {
                 quantity: newQuantity
             }, {
                 withCredentials: true

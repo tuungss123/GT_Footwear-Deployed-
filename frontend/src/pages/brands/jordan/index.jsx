@@ -12,7 +12,7 @@ const JordanPage = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [sortOption, setSortOption] = useState('');
     useEffect(() => {
-        axios.get('http://127.0.0.1:8000/gt/products/')
+        axios.get('https://gt-footwear-deployed.onrender.com/gt/products/')
             .then(response => {
                 setProducts(response.data);
             })
@@ -33,7 +33,7 @@ const JordanPage = () => {
 
     const addToCart = async (product, quantity, size) => {
         try {
-            const response = await axios.post('http://127.0.0.1:8000/gt/cart/add/', {
+            const response = await axios.post('https://gt-footwear-deployed.onrender.com/gt/cart/add/', {
                 product: product.id,
                 quantity,
                 size
@@ -114,7 +114,7 @@ const Modal = ({ product, isOpen, onClose, onAddToCart }) => {
 
     useEffect(() => {
         if (product && isOpen) {
-            axios.get(`http://127.0.0.1:8000/gt/sizes/${product.id}/`)
+            axios.get(`https://gt-footwear-deployed.onrender.com/gt/sizes/${product.id}/`)
                 .then(response => {
                     setAvailableSizes(response.data);
                 })

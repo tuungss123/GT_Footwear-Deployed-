@@ -46,7 +46,7 @@ const Navbar = () => {
   }
 
   useEffect(() => {
-    axios.get('http://127.0.0.1:8000/gt/brands/')
+    axios.get('https://gt-footwear-deployed.onrender.com/gt/brands/')
         .then(response => {
             setBrands(response.data);
         })
