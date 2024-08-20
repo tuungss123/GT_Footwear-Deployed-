@@ -60,7 +60,7 @@ const Navbar = () => {
     <div>
     <div className="bg-white text-center">
       <div className="bg-black px-4 py-2 text-center text-white">
-        Welcome to our store
+        Welcome to GT Footwear
       </div>
       <div className="container mx-auto">
         <nav className="flex md:flex-row justify-around items-center md:ml-7 lg:ml-10 px-4 py-2">

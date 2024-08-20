@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Cart = () => {
     const [cart, setCart] = useState([]);
-    const [selectedItems, setSelectedItems] = useState([]);
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
@@ -31,21 +30,6 @@ const Cart = () => {
         fetchCartItems();
     };
 
-    const handleSelectAll = (event) => {
-        if (event.target.checked) {
-            setSelectedItems(cart.map(item => item.id));
-        } else {
-            setSelectedItems([]);
-        }
-    };
-
-    const handleSelectItem = (id) => {
-        if (selectedItems.includes(id)) {
-            setSelectedItems(selectedItems.filter(itemId => itemId !== id));
-        } else {
-            setSelectedItems([...selectedItems, id]);
-        }
-    };
 
     const handleAddQuantity = (id, quantity) => {
         (async () => {
@@ -103,24 +87,11 @@ const Cart = () => {
             <div className="flex flex-col w-full md:w-2/3 pr-0 md:pr-6">
                 <h1 className="text-3xl font-bold mb-4">Cart({cart.length})</h1>
                 <div className="flex justify-between items-center border-b pb-4 mb-4">
-                    <label className="flex items-center">
-                        <input
-                            type="checkbox"
-                            className="mr-2"
-                            onChange={handleSelectAll}
-                            checked={selectedItems.length === cart.length}
-                        />
-                        Select All
-                    </label>
+                    
                 </div>
                 {cart.map(item => (
                     <div key={item.id} className="flex flex-col md:flex-row items-center justify-between bg-white p-4 mb-4 shadow-lg rounded-lg">
-                        <input
-                            type="checkbox"
-                            className="mr-2"
-                            checked={selectedItems.includes(item.id)}
-                            onChange={() => handleSelectItem(item.id)}
-                        />
+                        
                         <img className="w-20 h-20 object-contain" src={item.product.picture_url} alt={item.product.name} />
                         <div className="flex flex-col ml-4 flex-grow">
                             <p className="text-lg font-semibold">{item.product.name}</p>
