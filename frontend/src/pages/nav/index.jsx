@@ -5,7 +5,7 @@ import { faShoppingCart, faBars } from '@fortawesome/free-solid-svg-icons';
 import CartModal from './cart-modal';
 import BurgerMenu from './burger-menu';
 import axios from 'axios';
-import Logo from '../../images/gtlogo.png'
+import Logo from '../../images/gtlogo1.png'
 
 
 const Navbar = () => {
@@ -58,7 +58,7 @@ const Navbar = () => {
 
   return (
     <div>
-    <div className="bg-white text-center">
+    <div className="bg-white text-center ">
       <div className="bg-black px-4 py-2 text-center text-white">
         Welcome to GT Footwear
       </div>

@@ -83,7 +83,7 @@ const Cart = () => {
     };
 
     return (
-        <div className="flex flex-col md:flex-row p-6 bg-gray-100 min-h-screen">
+        <div className="flex flex-col md:flex-row p-6 bg-white min-h-screen">
             <div className="flex flex-col w-full md:w-2/3 pr-0 md:pr-6">
                 <h1 className="text-3xl font-bold mb-4">Cart({cart.length})</h1>
                 <div className="flex justify-between items-center border-b pb-4 mb-4">
@@ -118,9 +118,9 @@ const Cart = () => {
                 ))}
             </div>
 
-            <div className="w-full md:w-1/3 p-4 bg-white shadow-lg rounded-lg mt-4 md:mt-0 h-auto md:h-auto">
+            <div className="w-full md:w-1/3 p-4 bg-black text-white shadow-lg rounded-lg mt-4 md:mt-0 h-auto md:h-auto">
                 <h2 className="text-2xl font-bold mb-4">Billing Details</h2>
-                <form className="space-y-4">
+                <form className="space-y-6">
                     <div className="flex flex-col">
                         <label className="mb-1 font-semibold">First Name</label>
                         <input
@@ -130,6 +130,7 @@ const Cart = () => {
                             className="p-2 border border-gray-300 rounded"
                             value={firstName}
                             onChange={(e) => setFirstName(e.target.value)}
+                            required
                         />
                     </div>
                     <div className="flex flex-col">
@@ -141,6 +142,7 @@ const Cart = () => {
                             className="p-2 border border-gray-300 rounded"
                             value={lastName}
                             onChange={(e) => setLastName(e.target.value)}
+                            required
                         />
                     </div>
                     <div className="flex flex-col">
@@ -152,6 +154,7 @@ const Cart = () => {
                             className="p-2 border border-gray-300 rounded"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
+                            required
                         />
                     </div>
                     <div className="flex flex-col">
@@ -163,6 +166,7 @@ const Cart = () => {
                             className="p-2 border border-gray-300 rounded"
                             value={phone}
                             onChange={(e) => setPhone(e.target.value)}
+                            required
                         />
                     </div>
                     <div className="flex flex-col">
@@ -174,21 +178,24 @@ const Cart = () => {
                             className="p-2 border border-gray-300 rounded"
                             value={address}
                             onChange={(e) => setAddress(e.target.value)}
+                            required
                         />
                     </div>
-                </form>
+                
                 <h2 className="text-2xl font-bold mb-4 mt-8">Summary</h2>
-                <div className="flex justify-between items-center mb-4">
+                <div className="flex justify-between items-center">
                     <div className="text-lg font-bold">Total</div>
                     <div className="text-2xl font-bold">₱{cart.reduce((total, item) => total + item.product.price * item.quantity, 0)}</div>
                 </div>
                 <button
-                    className="w-full bg-black text-white px-6 py-2 rounded-lg hover:bg-gray-800"
+                    className="w-full bg-[#1d1d1d] text-white px-6 py-2 rounded-lg hover:bg-[#2a4086]"
                     onClick={handleCheckout}
                 >
                     CHECKOUT
                 </button>
+                </form>
             </div>
+            
         </div>
     );
 };

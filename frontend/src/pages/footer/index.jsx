@@ -4,7 +4,7 @@ import { faFacebookF } from '@fortawesome/free-brands-svg-icons'; // Import Face
 
 const Footer = () => {
     return (
-        <div className="bg-black text-white h-[120px] flex flex-col justify-center items-center">
+        <div className="bg-black text-white h-[120px] flex flex-col justify-center items-center mt-[50px]">
             <div className="text-center">
                 <p className="text-sm mb-2">&copy; 2024 GT Footwear. All rights reserved.</p>
                 <div className="mb-2">

@@ -155,27 +155,27 @@ const Modal = ({ product, isOpen, onClose, onAddToCart }) => {
 
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
-            <div className="bg-white p-6 rounded shadow-lg w-2/3 max-w-xl">
-                <img className="w-full h-auto mb-4" src={product.picture_url} alt={product.name} />
+            <div className="bg-[#292929] text-white p-6 flex xs:flex-col lg:flex-row items-center rounded-2xl shadow-lg w-2/3 max-w-xl">
+                <img className="xs:w-[80%] sm:w-[50%] h-auto mb-4 rounded-2xl" src={product.picture_url} alt={product.name} />
                 <div className="px-6 py-4">
-                    <h2 className="text-xl font-bold mb-2">{product.name}</h2>
-                    <p className="text-gray-700 text-sm mb-4">{product.brand_name}</p>
-                    <p className="text-gray-900 text-sm font-bold mb-4">{product.price} PHP</p>
+                    <h2 className="text-xl font-bold mb-2 text-center">{product.name}</h2>
+                    <p className="text-sm mb-4 text-center">{product.brand_name}</p>
+                    <p className=" text-sm font-bold mb-4">{product.price} PHP</p>
                     <div className="mb-4">
                         <label className="block mb-2">Size</label>
                         <div className="flex flex-wrap">
-                                {availableSizes.map(size => (
-                                    <div key={size.id}>
+                            {availableSizes.map(size => (
+                                <div key={size.id}>
                                     <button
                                         value={size.id}
                                         onClick={() => handleSizeClick(size.id)}
-                                        className={`p-2 m-1 border rounded ${selectedSize === size.id ? 'bg-blue-500 text-white' : 'bg-white text-black'} ${size.quantity_available === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                        className={`p-2 m-1 border rounded ${selectedSize === size.id ? 'bg-blue-800 text-white' : 'bg-white text-black'} ${size.quantity_available === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
                                         disabled={size.quantity_available === 0}
                                     >
                                         {size.size}
                                     </button>
                                 </div>
-                                ))}
+                            ))}
                         </div>
                     </div>
                     <div className="mb-4">
@@ -185,20 +185,20 @@ const Modal = ({ product, isOpen, onClose, onAddToCart }) => {
                             value={quantity}
                             onChange={(e) => setQuantity(e.target.value)}
                             min="1"
-                            className="w-full p-2 border rounded"
+                            className="w-full p-2 border rounded text-black"
                         />
                     </div>
-                    <div className="flex justify-end">
+                    <div className="flex justify-end w-full">
                         <button
                             onClick={handleAddToCart}
                             disabled={isButtonDisabled}
-                            className="bg-blue-500 text-white px-4 py-2 rounded mr-2"
+                            className="bg-black sm:w-auto xs:w-[50%] text-white px-4 py-2 rounded mr-2"
                         >
                             Add to Cart
                         </button>
                         <button
                             onClick={onClose}
-                            className="bg-gray-300 text-black px-4 py-2 rounded"
+                            className="bg-gray-300 sm:w-auto xs:w-[50%] text-black px-4 py-2 rounded"
                         >
                             Cancel
                         </button>
